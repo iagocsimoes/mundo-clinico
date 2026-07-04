@@ -9,8 +9,8 @@ export default function Sponsorship() {
         <div>
           <SectionHead
             eyebrow="Patrocínio · 8 posições"
-            title="Leve sua marca para dentro da maior imersão médica do ES"
-            lead="Uma oportunidade de colocar sua marca em frente a 100 médicos com clínica ativa, poder de decisão e disposição de investir."
+            title="Leve sua marca para dentro da maior imersão de negócios para clínicas do ES"
+            lead="Uma oportunidade de colocar sua marca em frente a 100 profissionais da saúde com clínica ativa, poder de decisão e disposição de investir."
           />
           <Reveal delay={0.1}>
             <div className="mt-8 flex flex-col items-start gap-3">

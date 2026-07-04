@@ -18,6 +18,62 @@ export const EVENT = {
   whatsapp: "#",
 };
 
+// Lead do hero (referência de design aprovada pelo cliente)
+export const HERO_LEAD =
+  "Um dia intenso de conteúdo prático e networking qualificado para posicionar sua clínica, atrair pacientes particulares e construir crescimento previsível.";
+
+// Marcas e parceiros confirmados — wordmarks até os logos oficiais chegarem
+// (troque por <Image> quando os arquivos estiverem em public/img/partners/)
+export const PARTNERS = [
+  "Enjoy Business",
+  "Saúde & Gestão",
+  "Contabil Saúde",
+  "Doctoralia Pro",
+  "Clínica Expert",
+  "SIS Saúde",
+  "Teia Saúde",
+];
+
+// O que é a imersão — três entregas centrais
+export const FEATURES = [
+  {
+    title: "Conteúdo aplicado",
+    text: "Estratégias e protocolos que você implementa já na semana seguinte.",
+  },
+  {
+    title: "Networking seletivo",
+    text: "Conexões com quem também decidiu operar em outro nível.",
+  },
+  {
+    title: "Resultados reais",
+    text: "Mais rentabilidade, agenda valorizada e crescimento previsível.",
+  },
+];
+
+// Onde acontece
+export const VENUE = {
+  title: "Ambiente premium para decisões extraordinárias.",
+  bullets: [
+    "Auditório moderno e confortável",
+    "Estrutura completa para networking",
+    "Gastronomia e hospitalidade Enjoy",
+    "Estacionamento e fácil acesso",
+  ],
+  // Fotos do espaço: colocar em public/img/venue/ (1.jpg, 2.jpg, 3.jpg…)
+  photos: [] as string[],
+  mapsUrl:
+    "https://www.google.com/maps/search/?api=1&query=" +
+    encodeURIComponent("Sede Enjoy Business, Vila Velha, ES"),
+};
+
+// Depoimento (da referência aprovada pelo cliente — foto pendente)
+export const TESTIMONIAL = {
+  quote:
+    "A Imersão Virada Clínica foi o ponto de virada do posicionamento da nossa clínica. Voltamos com clareza, estratégia e novos negócios.",
+  name: "Dra. Juliana Ribeiro",
+  role: "Dermatologista · Vitória/ES",
+};
+
 export const MOVEMENTS = [
   {
     n: "01",
@@ -27,7 +83,7 @@ export const MOVEMENTS = [
   {
     n: "02",
     title: "Visão",
-    text: "Você vê que existe saída. Pelo olhar de quem já passou. Casos reais de médicos que travaram e viraram.",
+    text: "Você vê que existe saída. Pelo olhar de quem já passou. Casos reais de quem travou e virou.",
   },
   {
     n: "03",
@@ -38,7 +94,7 @@ export const MOVEMENTS = [
 
 export const AUDIENCE = [
   {
-    title: "Para o médico com clínica ou consultório ativo",
+    title: "Para quem tem clínica ou consultório ativo",
     items: [
       "Tem estrutura montada e sente que o crescimento travou",
       "Trabalha muito e não vê o resultado financeiro que o esforço merece",
@@ -47,7 +103,7 @@ export const AUDIENCE = [
     ],
   },
   {
-    title: "Para o médico que quer construir um negócio de verdade",
+    title: "Para quem quer construir um negócio de verdade",
     items: [
       "Entende que saber a técnica não é suficiente para escalar",
       "Quer gestão de pessoas, precificação e estratégia dentro do seu universo",
@@ -105,7 +161,7 @@ export const SPEAKERS = [
 ];
 
 export const STATS = [
-  { n: "+1.000", l: "médicos já passaram pelo ecossistema O Mundo Clínico" },
+  { n: "+1.000", l: "profissionais da saúde já passaram pelo ecossistema O Mundo Clínico" },
   { n: "+100", l: "negócios de saúde impactados diretamente" },
   { n: "100", l: "vagas para esta edição" },
 ];
@@ -177,7 +233,7 @@ export const OBJECTIONS = [
   },
   {
     q: "“Já fui em eventos assim que não agregaram nada.”",
-    a: "São 100 médicos curados, não 500 cadeiras em um auditório genérico. Conteúdo feito para o universo de quem tem estrutura e quer o próximo nível. A diferença está no que você vive dentro da sala.",
+    a: "São 100 profissionais da saúde curados, não 500 cadeiras em um auditório genérico. Conteúdo feito para o universo de quem tem estrutura e quer o próximo nível. A diferença está no que você vive dentro da sala.",
   },
   {
     q: "“Não sei se isso é para o meu momento.”",
@@ -187,8 +243,8 @@ export const OBJECTIONS = [
 
 export const FAQ = [
   {
-    q: "A imersão é para qualquer médico?",
-    a: "É para médicos com consultório ou clínica ativa que querem construir um negócio de verdade. Não foi feita para quem está começando do zero, foi feita para quem já tem estrutura e quer o próximo nível.",
+    q: "A imersão é para qualquer profissional da saúde?",
+    a: "É para quem tem clínica, consultório ou operação de saúde ativa e quer construir um negócio de verdade. Não foi feita para quem está começando do zero, foi feita para quem já tem estrutura e quer o próximo nível.",
   },
   {
     q: "O que está incluso no ingresso?",

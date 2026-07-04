@@ -1,11 +1,13 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
+import Partners from "@/components/Partners";
 import ValueProp from "@/components/ValueProp";
 import Movements from "@/components/Movements";
 import Audience from "@/components/Audience";
-import Schedule from "@/components/Schedule";
 import Speakers from "@/components/Speakers";
 import SocialProof from "@/components/SocialProof";
+import Schedule from "@/components/Schedule";
+import Venue from "@/components/Venue";
 import Tickets from "@/components/Tickets";
 import Sponsorship from "@/components/Sponsorship";
 import Objections from "@/components/Objections";
@@ -21,12 +23,14 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
+        <Partners />
         <ValueProp />
         <Movements />
         <Audience />
-        <Schedule />
         <Speakers />
         <SocialProof />
+        <Schedule />
+        <Venue />
         <Tickets />
         <Sponsorship />
         <Objections />

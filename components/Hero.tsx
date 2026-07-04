@@ -39,7 +39,7 @@ export default function Hero() {
   return (
     <section
       id="topo"
-      className="relative isolate h-[100svh] max-h-[920px] min-h-[600px] overflow-hidden bg-deep"
+      className="relative isolate flex h-[100svh] max-h-[920px] min-h-[600px] flex-col overflow-hidden bg-deep pt-16 sm:pt-0"
     >
       {/* brilho de fundo */}
       <div
@@ -58,25 +58,26 @@ export default function Hero() {
           alt=""
           width={1080}
           height={962}
-          priority
+          loading="eager"
           className="h-auto w-full object-cover opacity-80 mix-blend-screen"
         />
       </div>
 
-      {/* ---------- PARTICIPANTES — preenchendo a tela ---------- */}
+      {/* ---------- PARTICIPANTES ---------- */}
+      {/* Mobile: em fluxo, proporção natural (sem zoom) · Desktop: preenchendo a tela */}
       <motion.div
         initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 1.02 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.9, ease }}
-        className="absolute inset-x-0 bottom-0 top-14 z-[1] sm:top-16"
+        className="relative z-[1] mt-auto aspect-[1080/615] min-h-0 w-full sm:absolute sm:inset-x-0 sm:bottom-0 sm:top-16 sm:mt-0 sm:aspect-auto"
       >
         <Image
           src="/img/participantes.png"
           alt="Palestrantes da Imersão Virada Clínica"
           fill
-          priority
+          preload
           sizes="100vw"
-          className="object-cover object-top sm:object-contain sm:object-top"
+          className="object-contain object-top"
         />
       </motion.div>
 
@@ -91,13 +92,13 @@ export default function Hero() {
       />
 
       {/* ---------- CONTEÚDO (base) ---------- */}
-      <div className="absolute inset-x-0 bottom-0 z-10 mx-auto flex w-full max-w-3xl flex-col items-center px-6 pb-8 text-center sm:pb-10">
+      <div className="relative z-10 mx-auto mt-auto flex w-full max-w-3xl flex-col items-center px-6 pb-8 text-center sm:absolute sm:inset-x-0 sm:bottom-0 sm:mt-0 sm:pb-10">
         <motion.h1
           {...rise(0.1)}
           className="font-serif leading-[1.08] text-lace drop-shadow-[0_2px_18px_rgba(0,0,0,0.55)]"
           style={{ fontSize: "clamp(1.35rem, 2.9vw, 2.35rem)" }}
         >
-          A maior imersão de negócios para médicos do{" "}
+          A maior imersão de negócios para clínicas do{" "}
           <span className="gold-gradient-text">Espírito Santo.</span>
         </motion.h1>
 
@@ -106,7 +107,7 @@ export default function Hero() {
           {...rise(0.22)}
           className="mt-5 flex flex-col items-center justify-center gap-2 text-[0.82rem] sm:flex-row sm:gap-6 sm:text-sm"
         >
-          <span className="inline-flex items-center gap-2">
+          <span className="inline-flex items-center gap-2 whitespace-nowrap">
             <IconCalendar />
             <span className="font-semibold text-lace">{EVENT.date}</span>
             <span className="text-lace/70">
@@ -114,7 +115,7 @@ export default function Hero() {
             </span>
           </span>
           <span className="hidden h-4 w-px bg-line sm:block" />
-          <span className="inline-flex items-center gap-2">
+          <span className="inline-flex items-center gap-2 whitespace-nowrap">
             <IconPin />
             <span className="font-semibold text-lace">{EVENT.venue}</span>
             <span className="text-lace/70">· {EVENT.city}</span>

@@ -17,15 +17,16 @@ export default function FinalCta() {
         <Reveal>
           <p className="eyebrow mb-6">O próximo nível começa com uma decisão</p>
           <h2 className="font-serif text-3xl leading-[1.12] text-lace sm:text-5xl">
-            Médicos que chegaram onde você quer chegar não chegaram lá trabalhando mais.
+            Profissionais da saúde que chegaram onde você quer chegar não chegaram lá trabalhando
+            mais.
             <br className="hidden sm:block" />{" "}
             <span className="gold-gradient-text">Chegaram lá enxergando diferente.</span>
           </h2>
         </Reveal>
         <Reveal delay={0.1}>
           <p className="mx-auto mt-7 max-w-xl text-base leading-relaxed text-muted">
-            A Virada Clínica é a maior imersão de negócios para médicos do Espírito Santo. E acontece
-            uma vez.
+            A Virada Clínica é a maior imersão de negócios para clínicas do Espírito Santo. E
+            acontece uma vez.
           </p>
           <p className="mt-4 font-serif text-lg text-gold">
             {EVENT.date}. {EVENT.venue}. {EVENT.city}.

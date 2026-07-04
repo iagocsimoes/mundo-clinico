@@ -24,18 +24,22 @@ export default function Nav() {
     >
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
         <Logo />
-        <nav className="hidden items-center gap-8 text-[0.8rem] font-medium tracking-wide text-muted md:flex">
+        {/* 5 links + CTA não cabem em 768px — menu só a partir de lg */}
+        <nav className="hidden items-center gap-8 text-[0.8rem] font-medium tracking-wide text-muted lg:flex">
           <a href="#imersao" className="transition-colors hover:text-gold">
             A imersão
-          </a>
-          <a href="#programacao" className="transition-colors hover:text-gold">
-            Programação
           </a>
           <a href="#palestrantes" className="transition-colors hover:text-gold">
             Palestrantes
           </a>
+          <a href="#programacao" className="transition-colors hover:text-gold">
+            Programação
+          </a>
           <a href="#ingressos" className="transition-colors hover:text-gold">
             Ingressos
+          </a>
+          <a href="#faq" className="transition-colors hover:text-gold">
+            FAQ
           </a>
         </nav>
         <a href={EVENT.checkoutUrl} className="btn-gold !px-5 !py-3 !text-[0.7rem]">

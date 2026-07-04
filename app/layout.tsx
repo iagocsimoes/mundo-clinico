@@ -20,12 +20,12 @@ const SITE_URL = "https://viradaclinica.com.br";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Imersão Virada Clínica · A maior imersão de negócios para médicos do ES",
+  title: "Imersão Virada Clínica · A maior imersão de negócios para clínicas do ES",
   description:
-    "Um dia inteiro de imersão para médicos com clínica ativa que estão trabalhando muito e crescendo pouco. Gestão, Vendas e Resultado — 01 de agosto, Vila Velha/ES. Apenas 100 vagas.",
+    "Um dia inteiro de imersão para profissionais da saúde com clínica ativa que estão trabalhando muito e crescendo pouco. Gestão, Vendas e Resultado — 01 de agosto, Vila Velha/ES. Apenas 100 vagas.",
   keywords: [
-    "imersão médica",
-    "negócios para médicos",
+    "imersão para clínicas",
+    "negócios para clínicas",
     "gestão de clínica",
     "O Mundo Clínico",
     "Virada Clínica",
@@ -40,14 +40,14 @@ export const metadata: Metadata = {
     siteName: "O Mundo Clínico",
     title: "Imersão Virada Clínica · Gestão, Vendas e Resultado",
     description:
-      "A maior imersão de negócios para médicos do Espírito Santo. 01 de agosto · Vila Velha/ES · Apenas 100 vagas.",
+      "A maior imersão de negócios para clínicas do Espírito Santo. 01 de agosto · Vila Velha/ES · Apenas 100 vagas.",
     images: [{ url: "/img/hero.png", width: 1191, height: 603, alt: "Imersão Virada Clínica" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Imersão Virada Clínica · Gestão, Vendas e Resultado",
     description:
-      "A maior imersão de negócios para médicos do Espírito Santo. 01/08 · Vila Velha/ES.",
+      "A maior imersão de negócios para clínicas do Espírito Santo. 01/08 · Vila Velha/ES.",
     images: ["/img/hero.png"],
   },
   robots: { index: true, follow: true },

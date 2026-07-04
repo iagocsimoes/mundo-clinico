@@ -51,6 +51,47 @@ function Icon({ name }: { name: ScheduleSlot["icon"] }) {
   );
 }
 
+/** Nó da timeline — preenchido em gold quando o slot é uma Experiência. */
+function Node({ slot }: { slot: ScheduleSlot }) {
+  return (
+    <div
+      className={`z-10 grid h-11 w-11 flex-none place-items-center rounded-full border ${
+        slot.tag
+          ? "border-gold-light/70 bg-gold text-ink shadow-[0_0_28px_-6px_rgba(201,178,145,0.6)]"
+          : "border-line bg-surface-2 text-camel"
+      }`}
+    >
+      <Icon name={slot.icon} />
+    </div>
+  );
+}
+
+function Tag({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="rounded-full border border-gold/30 bg-gold/[0.07] px-2.5 py-0.5 text-[0.62rem] font-semibold tracking-[0.12em] text-gold-light uppercase">
+      {children}
+    </span>
+  );
+}
+
+/** Rótulo do período com "colchete" apontando para o grupo de slots (como no mock). */
+function PeriodBracket({ label }: { label: string }) {
+  return (
+    <div className="relative mx-8 h-3 rounded-t-lg border-x border-t border-line">
+      <p className="eyebrow absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap bg-deep px-4">
+        {label}
+      </p>
+    </div>
+  );
+}
+
+// Divisão dos períodos: manhã (08h–12h) e tarde (14h–21h)
+const hourOf = (time: string) => parseInt(time, 10);
+const GROUPS = [
+  { label: "Manhã", slots: SCHEDULE.filter((s) => hourOf(s.time) < 14) },
+  { label: "Tarde", slots: SCHEDULE.filter((s) => hourOf(s.time) >= 14) },
+];
+
 export default function Schedule() {
   return (
     <Section id="programacao" className="overflow-hidden">
@@ -61,50 +102,108 @@ export default function Schedule() {
         center
       />
 
-      <ol className="mx-auto mt-14 max-w-2xl">
-        {SCHEDULE.map((s, i) => {
-          const last = i === SCHEDULE.length - 1;
-          return (
-            <Reveal key={s.time + s.label} delay={i * 0.06} y={18} duration={0.6}>
-              <li className="flex gap-4 sm:gap-6">
-                {/* horário */}
-                <div className="w-12 flex-none pt-2 text-right font-serif text-sm text-gold sm:w-16 sm:text-base">
-                  {s.time}
-                </div>
+      {/* ---------- Desktop: timeline horizontal em dois períodos ---------- */}
+      <div className="mt-16 hidden lg:block">
+        {/* rótulos MANHÃ / TARDE */}
+        <div className="flex gap-x-10">
+          {GROUPS.map((g, gi) => (
+            <div key={g.label} className="min-w-0 basis-0" style={{ flexGrow: g.slots.length }}>
+              <Reveal delay={gi * 0.2} y={14} duration={0.6}>
+                <PeriodBracket label={g.label} />
+              </Reveal>
+            </div>
+          ))}
+        </div>
 
-                {/* trilha + nó/ícone */}
-                <div className="relative flex flex-none flex-col items-center">
-                  <div
-                    className={`z-10 grid h-11 w-11 place-items-center rounded-full border transition-colors ${
-                      s.tag
-                        ? "border-gold/60 bg-gold/15 text-gold"
-                        : "border-line bg-surface-2 text-camel"
-                    }`}
-                  >
-                    <Icon name={s.icon} />
-                  </div>
-                  {!last && (
-                    <div className="my-1 w-px flex-1 bg-gradient-to-b from-line via-line to-transparent" />
-                  )}
-                </div>
+        {/* trilha: linha dourada contínua atravessando os dois períodos + nós com ícones */}
+        <div className="relative mt-9">
+          <div aria-hidden className="gold-rule absolute inset-x-0 top-[22px]" />
+          <div className="flex gap-x-10">
+            {GROUPS.map((g, gi) => {
+              const offset = gi === 0 ? 0 : GROUPS[0].slots.length;
+              return (
+                <ol
+                  key={g.label}
+                  className="grid min-w-0 basis-0 auto-cols-fr grid-flow-col gap-x-3"
+                  style={{ flexGrow: g.slots.length }}
+                >
+                  {g.slots.map((s, i) => (
+                    <li key={s.time + s.label} className="min-w-0">
+                      <Reveal delay={0.08 + (offset + i) * 0.07} y={18} duration={0.6}>
+                        <div className="flex flex-col items-center px-1 text-center">
+                          <Node slot={s} />
+                          <p className="mt-4 font-serif text-[1.05rem] text-gold">{s.time}</p>
+                          <h3 className="mt-1 font-serif text-[0.95rem] leading-snug text-lace">
+                            {s.label}
+                          </h3>
+                          {s.desc && (
+                            <p className="mt-1 text-[0.8rem] leading-relaxed text-muted">{s.desc}</p>
+                          )}
+                          {s.tag && (
+                            <div className="mt-2.5">
+                              <Tag>{s.tag}</Tag>
+                            </div>
+                          )}
+                        </div>
+                      </Reveal>
+                    </li>
+                  ))}
+                </ol>
+              );
+            })}
+          </div>
+        </div>
+      </div>
 
-                {/* conteúdo */}
-                <div className={last ? "pb-1 pt-2" : "pb-8 pt-2"}>
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                    <h3 className="font-serif text-lg text-lace sm:text-xl">{s.label}</h3>
-                    {s.tag && (
-                      <span className="rounded-full border border-gold/30 bg-gold/[0.07] px-2.5 py-0.5 text-[0.62rem] font-semibold tracking-[0.12em] text-gold-light uppercase">
-                        {s.tag}
-                      </span>
-                    )}
-                  </div>
-                  {s.desc && <p className="mt-1 text-[0.9rem] text-muted">{s.desc}</p>}
-                </div>
-              </li>
+      {/* ---------- Mobile/tablet: timeline vertical com linha à esquerda ---------- */}
+      <div className="mx-auto mt-12 max-w-2xl lg:hidden">
+        {GROUPS.map((g, gi) => (
+          <div key={g.label} className={gi > 0 ? "mt-10" : undefined}>
+            <Reveal y={14} duration={0.55}>
+              <div className="mb-6 flex items-center gap-4">
+                <p className="eyebrow">{g.label}</p>
+                <span aria-hidden className="h-px flex-1 bg-gradient-to-r from-line to-transparent" />
+              </div>
             </Reveal>
-          );
-        })}
-      </ol>
+
+            <ol>
+              {g.slots.map((s, i) => {
+                const last = i === g.slots.length - 1;
+                return (
+                  <li key={s.time + s.label}>
+                    <Reveal delay={0.05 + i * 0.05} y={16} duration={0.55} className="flex gap-4 sm:gap-6">
+                      {/* horário */}
+                      <div className="w-12 flex-none pt-2 text-right font-serif text-sm text-gold sm:w-16 sm:text-base">
+                        {s.time}
+                      </div>
+
+                      {/* trilha + nó/ícone */}
+                      <div className="relative flex flex-none flex-col items-center">
+                        <Node slot={s} />
+                        {!last && (
+                          <div
+                            aria-hidden
+                            className="my-1 w-px flex-1 bg-gradient-to-b from-line via-line to-transparent"
+                          />
+                        )}
+                      </div>
+
+                      {/* conteúdo */}
+                      <div className={last ? "pb-1 pt-2" : "pb-8 pt-2"}>
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                          <h3 className="font-serif text-lg text-lace sm:text-xl">{s.label}</h3>
+                          {s.tag && <Tag>{s.tag}</Tag>}
+                        </div>
+                        {s.desc && <p className="mt-1 text-[0.9rem] text-muted">{s.desc}</p>}
+                      </div>
+                    </Reveal>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+        ))}
+      </div>
 
       <p className="mt-10 text-center text-[0.78rem] tracking-wide text-muted">
         Programação sujeita a pequenos ajustes · a essência do dia está mantida.
