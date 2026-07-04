@@ -68,52 +68,78 @@ function IconImage() {
   );
 }
 
-/* ---------- Grid de fotos ----------
- * Slots seguem o mock: 1 painel largo em cima + 2 menores abaixo.
- * Quando as fotos oficiais chegarem em public/img/venue/ (1.jpg, 2.jpg, 3.jpg…),
- * basta preencher VENUE.photos em lib/data.ts — cada slot troca o placeholder
- * pelo <Image> automaticamente (fotos além do 3º slot são ignoradas).
+/* ---------- Área de fotos ----------
+ * Adapta-se à quantidade em VENUE.photos (lib/data.ts):
+ *   0 → placeholder · 1 → painel único · 2 → lado a lado · 3+ → 1 largo + 2 menores.
+ * Novas fotos: adicione os arquivos em public/img/venue/ e liste em VENUE.photos.
  */
-const PHOTO_SLOTS = [
-  { className: "col-span-2 aspect-[16/10]", sizes: "(max-width: 1024px) 100vw, 44vw" },
-  { className: "aspect-[4/3]", sizes: "(max-width: 1024px) 50vw, 22vw" },
-  { className: "aspect-[4/3]", sizes: "(max-width: 1024px) 50vw, 22vw" },
-];
-
-function PhotoPlaceholder() {
+function PhotoFrame({
+  src,
+  index,
+  sizes,
+  className = "",
+}: {
+  src: string;
+  index: number;
+  sizes: string;
+  className?: string;
+}) {
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-2.5 p-4">
-      <IconImage />
-      {/* camel (não muted): contraste AA sobre surface-2 para texto pequeno */}
-      <p className="text-center text-xs text-camel">Foto do espaço · em breve</p>
+    <div className={`relative overflow-hidden border border-line bg-surface-2 ${className}`}>
+      <Image
+        src={src}
+        alt={`${EVENT.venue} — foto do espaço ${index + 1}`}
+        fill
+        sizes={sizes}
+        className="object-cover"
+      />
     </div>
   );
 }
 
 function PhotoGrid() {
+  const photos = VENUE.photos;
+
+  // Sem fotos: placeholder discreto mantendo a proporção do painel.
+  if (photos.length === 0) {
+    return (
+      <div className="flex aspect-[4/3] w-full flex-col items-center justify-center gap-2.5 rounded-2xl border border-line bg-surface-2 p-4">
+        <IconImage />
+        {/* camel (não muted): contraste AA sobre surface-2 para texto pequeno */}
+        <p className="text-center text-xs text-camel">Foto do espaço · em breve</p>
+      </div>
+    );
+  }
+
+  // Uma foto: painel único preenchendo a coluna.
+  if (photos.length === 1) {
+    return (
+      <PhotoFrame
+        src={photos[0]}
+        index={0}
+        sizes="(max-width: 1024px) 100vw, 44vw"
+        className="aspect-[3/2] w-full rounded-2xl"
+      />
+    );
+  }
+
+  // Duas fotos: lado a lado.
+  if (photos.length === 2) {
+    return (
+      <div className="grid grid-cols-2 gap-4">
+        {photos.map((src, i) => (
+          <PhotoFrame key={i} src={src} index={i} sizes="(max-width: 1024px) 50vw, 22vw" className="aspect-[4/5] rounded-xl" />
+        ))}
+      </div>
+    );
+  }
+
+  // Três ou mais: 1 painel largo + 2 menores (fotos além do 3º slot são ignoradas).
   return (
     <div className="grid grid-cols-2 gap-4">
-      {PHOTO_SLOTS.map((slot, i) => {
-        const src = VENUE.photos[i];
-        return (
-          <div
-            key={i}
-            className={`relative overflow-hidden rounded-xl border border-line bg-surface-2 ${slot.className}`}
-          >
-            {src ? (
-              <Image
-                src={src}
-                alt={`${EVENT.venue} — foto do espaço ${i + 1}`}
-                fill
-                sizes={slot.sizes}
-                className="object-cover"
-              />
-            ) : (
-              <PhotoPlaceholder />
-            )}
-          </div>
-        );
-      })}
+      <PhotoFrame src={photos[0]} index={0} sizes="(max-width: 1024px) 100vw, 44vw" className="col-span-2 aspect-[16/10] rounded-xl" />
+      <PhotoFrame src={photos[1]} index={1} sizes="(max-width: 1024px) 50vw, 22vw" className="aspect-[4/3] rounded-xl" />
+      <PhotoFrame src={photos[2]} index={2} sizes="(max-width: 1024px) 50vw, 22vw" className="aspect-[4/3] rounded-xl" />
     </div>
   );
 }

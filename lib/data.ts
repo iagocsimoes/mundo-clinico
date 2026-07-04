@@ -22,18 +22,6 @@ export const EVENT = {
 export const HERO_LEAD =
   "Um dia intenso de conteúdo prático e networking qualificado para posicionar sua clínica, atrair pacientes particulares e construir crescimento previsível.";
 
-// Marcas e parceiros confirmados — wordmarks até os logos oficiais chegarem
-// (troque por <Image> quando os arquivos estiverem em public/img/partners/)
-export const PARTNERS = [
-  "Enjoy Business",
-  "Saúde & Gestão",
-  "Contabil Saúde",
-  "Doctoralia Pro",
-  "Clínica Expert",
-  "SIS Saúde",
-  "Teia Saúde",
-];
-
 // O que é a imersão — três entregas centrais
 export const FEATURES = [
   {
@@ -59,8 +47,8 @@ export const VENUE = {
     "Gastronomia e hospitalidade Enjoy",
     "Estacionamento e fácil acesso",
   ],
-  // Fotos do espaço: colocar em public/img/venue/ (1.jpg, 2.jpg, 3.jpg…)
-  photos: [] as string[],
+  // Fotos do espaço em public/img/venue/ — a área se adapta à quantidade
+  photos: ["/img/venue/sede.jpg"] as string[],
   mapsUrl:
     "https://www.google.com/maps/search/?api=1&query=" +
     encodeURIComponent("Sede Enjoy Business, Vila Velha, ES"),
