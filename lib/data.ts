@@ -7,7 +7,7 @@ export const EVENT = {
   date: "01 de agosto de 2026",
   dateShort: "01 AGO",
   weekday: "Sábado",
-  time: "08h",
+  time: "07h",
   venue: "Sede Enjoy Business",
   address: "Alça da Terceira Ponte, 245 — Praia da Costa, Vila Velha/ES",
   city: "Vila Velha/ES",
@@ -115,7 +115,7 @@ export const SCHEDULE: ScheduleSlot[] = [
   { time: "12h15", label: "Almoço Buffet Aleixo", icon: "plate", tag: "Experiência" },
   { time: "13h45", label: "Momento surpresa", icon: "gift", tag: "Experiência" },
   { time: "14h00", label: "Palestras e painéis", desc: "Bloco da tarde", icon: "mic" },
-  { time: "18h00", label: "Coquetel Experience", desc: "Ativações e experiências", icon: "glass" },
+  { time: "18h00", label: "Cocktail Experience", desc: "Ativações e experiências", icon: "glass" },
   { time: "21h00", label: "Encerramento", icon: "check" },
 ];
 
