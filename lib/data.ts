@@ -104,36 +104,18 @@ export type ScheduleSlot = {
   time: string;
   label: string;
   desc?: string;
-  icon: "badge" | "star" | "mic" | "plate" | "glass" | "cheers" | "check";
+  icon: "badge" | "star" | "mic" | "plate" | "glass" | "cheers" | "check" | "gift";
   tag?: string;
 };
 
 export const SCHEDULE: ScheduleSlot[] = [
-  { time: "08h00", label: "Credenciamento e ambientação", icon: "badge" },
-  { time: "09h00", label: "Abertura oficial", icon: "star" },
-  { time: "09h15", label: "Palestras e painéis", desc: "Bloco da manhã", icon: "mic" },
-  {
-    time: "12h00",
-    label: "Almoço Buffet Aleixo",
-    desc: "+ networking",
-    icon: "plate",
-    tag: "Experiência",
-  },
+  { time: "07h00", label: "Experiência de chegada", desc: "Ativações e ambientação", icon: "badge" },
+  { time: "08h30", label: "Abertura oficial", icon: "star" },
+  { time: "09h00", label: "Palestras e painéis", desc: "Bloco da manhã", icon: "mic" },
+  { time: "12h15", label: "Almoço Buffet Aleixo", icon: "plate", tag: "Experiência" },
+  { time: "13h45", label: "Momento surpresa", icon: "gift", tag: "Experiência" },
   { time: "14h00", label: "Palestras e painéis", desc: "Bloco da tarde", icon: "mic" },
-  {
-    time: "17h00",
-    label: "Beer Garden",
-    desc: "Ativações e network experience",
-    icon: "glass",
-    tag: "Experiência",
-  },
-  {
-    time: "19h00",
-    label: "Happy Hour",
-    desc: "Com palestrantes e membros OMC",
-    icon: "cheers",
-    tag: "Experiência",
-  },
+  { time: "18h00", label: "Coquetel Experience", desc: "Ativações e experiências", icon: "glass" },
   { time: "21h00", label: "Encerramento", icon: "check" },
 ];
 
@@ -158,8 +140,8 @@ export const TICKETS = [
   {
     tier: "Platinum",
     price: "997",
-    lead: "Para quem quer o conteúdo e o ambiente.",
-    items: ["Acesso a todas as palestras e painéis", "Kit do evento", "Almoço incluso"],
+    lead: "Para quem quer viver o conteúdo e estar dentro da Imersão.",
+    items: ["Acesso a todas as palestras e painéis", "Kit oficial do evento", "Almoço incluso"],
     cta: "Garantir ingresso Platinum",
     featured: false,
     note: null,
@@ -169,12 +151,12 @@ export const TICKETS = [
   {
     tier: "Diamond",
     price: "1.997",
-    lead: "Para quem quer a experiência completa.",
+    lead: "Para quem quer viver o evento com uma experiência mais completa.",
     items: [
       "Acesso a todas as palestras e painéis",
-      "Acesso ao Beer Garden",
-      "Kit do evento",
+      "Kit oficial do evento",
       "Almoço Buffet Aleixo em área VIP",
+      "Acesso ao Coquetel Experience",
     ],
     cta: "Garantir ingresso Diamond",
     featured: true,
@@ -185,15 +167,15 @@ export const TICKETS = [
   {
     tier: "Experience",
     price: "2.297",
-    lead: "Para quem quer o acesso máximo.",
+    lead: "Para quem quer viver a Imersão de forma mais próxima e exclusiva.",
     items: [
       "Acesso a todas as palestras e painéis",
-      "Kit do evento + brinde exclusivo",
+      "Kit oficial do evento + brinde exclusivo",
       "Almoço Buffet Aleixo em área VIP",
-      "Networking com palestrantes",
+      "Acesso ao Coquetel Experience",
       "Meet exclusivo com os fundadores do O Mundo Clínico",
       "Sessão de fotos exclusiva",
-      "Happy Hour exclusivo com palestrantes e membros OMC (19h–21h)",
+      "Momento reservado de conexão com palestrantes e convidados",
     ],
     cta: "Garantir ingresso Experience",
     featured: false,
@@ -236,7 +218,7 @@ export const FAQ = [
   },
   {
     q: "O que está incluso no ingresso?",
-    a: "Depende do lote. O Platinum cobre conteúdo, almoço e kit. O Diamond adiciona Beer Garden e área VIP no almoço. O Experience inclui tudo isso mais networking com palestrantes, meet exclusivo com os fundadores do OMC, sessão de fotos e happy hour privado das 19h às 21h.",
+    a: "Depende do lote. O Platinum cobre conteúdo, almoço e kit. O Diamond adiciona o Coquetel Experience e área VIP no almoço. O Experience inclui tudo isso mais meet exclusivo com os fundadores do OMC, sessão de fotos e um momento reservado de conexão com os palestrantes.",
   },
   {
     q: "Vou sair com algo concreto?",

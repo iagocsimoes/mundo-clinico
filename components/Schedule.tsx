@@ -43,6 +43,13 @@ function Icon({ name }: { name: ScheduleSlot["icon"] }) {
         <path d="M8.5 12.5l2.3 2.3 4.7-5" {...p} />
       </>
     ),
+    gift: (
+      <>
+        <rect x="4.5" y="9.5" width="15" height="11" rx="1.5" {...p} />
+        <path d="M3.5 9.5h17M12 9.5v11" {...p} />
+        <path d="M12 9.5C11 6.8 9 5.4 7.7 6.5c-1.3 1.1-.1 3 4.3 3ZM12 9.5c1-2.7 3-4.1 4.3-3 1.3 1.1.1 3-4.3 3Z" {...p} />
+      </>
+    ),
   };
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden>
@@ -85,11 +92,11 @@ function PeriodBracket({ label }: { label: string }) {
   );
 }
 
-// Divisão dos períodos: manhã (08h–12h) e tarde (14h–21h)
+// Divisão dos períodos pelo meio-dia: manhã (até 12h) e tarde (12h em diante)
 const hourOf = (time: string) => parseInt(time, 10);
 const GROUPS = [
-  { label: "Manhã", slots: SCHEDULE.filter((s) => hourOf(s.time) < 14) },
-  { label: "Tarde", slots: SCHEDULE.filter((s) => hourOf(s.time) >= 14) },
+  { label: "Manhã", slots: SCHEDULE.filter((s) => hourOf(s.time) < 12) },
+  { label: "Tarde", slots: SCHEDULE.filter((s) => hourOf(s.time) >= 12) },
 ];
 
 export default function Schedule() {
@@ -98,7 +105,7 @@ export default function Schedule() {
       <SectionHead
         eyebrow="Programação"
         title="O dia que você vai viver"
-        lead="Das 08h às 21h — conteúdo, conexões e experiências pensadas para durar o dia inteiro."
+        lead="Das 07h às 21h — conteúdo, conexões e experiências pensadas para durar o dia inteiro."
         center
       />
 
