@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Libre_Baskerville, Montserrat } from "next/font/google";
+import MetaPixel from "@/components/MetaPixel";
 import "./globals.css";
 
 const serif = Libre_Baskerville({
@@ -33,10 +34,11 @@ export const metadata: Metadata = {
     "Vila Velha",
   ],
   authors: [{ name: "O Mundo Clínico" }],
+  alternates: { canonical: "/imersaoviradaclinica" },
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    url: SITE_URL,
+    url: "/imersaoviradaclinica",
     siteName: "O Mundo Clínico",
     title: "Imersão Virada Clínica · Gestão, Vendas e Resultado",
     description:
@@ -58,7 +60,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR" className={`${serif.variable} ${sans.variable}`}>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <MetaPixel />
+        {children}
+      </body>
     </html>
   );
 }
