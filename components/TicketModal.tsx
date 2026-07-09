@@ -55,7 +55,15 @@ function LeadForm({ ticket, onClose }: { ticket: TicketModalData; onClose: () =>
       tier: ticket.tier,
     });
 
-    // Lead só dispara após a validação passar, no momento do redirect pro WhatsApp
+    // Marca ?leadcoletado=1 na URL ANTES de disparar o Lead, para o evento do Pixel
+    // já viajar com essa URL (permite filtrar por "URL contém leadcoletado" no Meta).
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.searchParams.set("leadcoletado", "1");
+      window.history.replaceState(null, "", url.toString());
+    }
+
+    // Lead só dispara após a validação passar, já com a URL marcada
     if (typeof window !== "undefined" && window.fbq) {
       window.fbq("track", "Lead", {
         content_name: "Imersão Virada Clínica",
