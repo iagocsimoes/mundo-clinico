@@ -4,6 +4,12 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState, type FormEvent } from "react";
 import { saveLead } from "@/lib/leads";
 
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+  }
+}
+
 export type TicketModalData = {
   tier: string;
   whatsappUrl: string;
@@ -48,6 +54,13 @@ function LeadForm({ ticket, onClose }: { ticket: TicketModalData; onClose: () =>
       whatsapp: `+55 ${phone}`,
       tier: ticket.tier,
     });
+
+    // Lead só dispara após a validação passar, no momento do redirect pro WhatsApp
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("track", "Lead", {
+        content_name: "Imersão Virada Clínica",
+      });
+    }
 
     window.open(ticket.whatsappUrl, "_blank", "noopener,noreferrer");
     onClose();
