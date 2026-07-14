@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState, type FormEvent } from "react";
-import { saveLead } from "@/lib/leads";
+import { sendLead } from "@/lib/leads";
 
 declare global {
   interface Window {
@@ -48,7 +48,9 @@ function LeadForm({ ticket, onClose }: { ticket: TicketModalData; onClose: () =>
     setErrors(errs);
     if (Object.keys(errs).length > 0) return;
 
-    saveLead({
+    // Envia ao servidor sem await: o window.open abaixo precisa rodar no
+    // mesmo gesto do usuário para não ser bloqueado como popup.
+    sendLead({
       name: name.trim(),
       email: email.trim(),
       whatsapp: `+55 ${phone}`,

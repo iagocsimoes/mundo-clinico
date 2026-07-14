@@ -16,6 +16,7 @@ import Faq from "@/components/Faq";
 import FinalCta from "@/components/FinalCta";
 import Footer from "@/components/Footer";
 import StickyCta from "@/components/StickyCta";
+import LeadSync from "@/components/LeadSync";
 
 export default function Home() {
   return (
@@ -40,6 +41,7 @@ export default function Home() {
       </main>
       <Footer />
       <StickyCta />
+      <LeadSync />
     </>
   );
 }

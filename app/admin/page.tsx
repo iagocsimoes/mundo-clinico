@@ -1,14 +1,16 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
-import { clearLeads, deleteLead, getLeads, type Lead } from "@/lib/leads";
+import {
+  clearLeads,
+  deleteLead,
+  fetchLeads,
+  login,
+  logout,
+  type Lead,
+} from "@/lib/leads";
 import { TICKETS } from "@/lib/data";
 import Logo from "@/components/Logo";
-
-// ── Credenciais do dashboard (sem backend — troque aqui) ───────────
-const ADMIN_USER = "admin";
-const ADMIN_PASS = "viradaclinica2026";
-const AUTH_KEY = "virada-clinica:admin-auth";
 
 const inputClass =
   "w-full rounded-lg border border-line bg-ink/70 px-4 py-3.5 text-[0.95rem] text-lace placeholder:text-muted/50 outline-none transition-colors focus:border-gold/70 focus:ring-1 focus:ring-gold/40";
@@ -41,18 +43,26 @@ function exportCsv(leads: Lead[]) {
   URL.revokeObjectURL(url);
 }
 
-function LoginScreen({ onLogin }: { onLogin: () => void }) {
+function LoginScreen({ onLogin }: { onLogin: (leads: Lead[]) => void }) {
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const [error, setError] = useState(false);
+  const [sending, setSending] = useState(false);
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    if (user.trim() === ADMIN_USER && pass === ADMIN_PASS) {
-      window.localStorage.setItem(AUTH_KEY, "1");
-      onLogin();
-    } else {
+    if (sending) return;
+    setSending(true);
+    try {
+      if (await login(user.trim(), pass)) {
+        onLogin((await fetchLeads()) ?? []);
+      } else {
+        setError(true);
+      }
+    } catch {
       setError(true);
+    } finally {
+      setSending(false);
     }
   }
 
@@ -106,8 +116,8 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
             <p className="text-xs text-red-400">Usuário ou senha incorretos.</p>
           )}
 
-          <button type="submit" className="btn-gold w-full">
-            Entrar
+          <button type="submit" disabled={sending} className="btn-gold w-full disabled:opacity-60">
+            {sending ? "Entrando…" : "Entrar"}
           </button>
         </form>
       </div>
@@ -115,23 +125,31 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
   );
 }
 
-function Dashboard({ onLogout }: { onLogout: () => void }) {
-  const [leads, setLeads] = useState<Lead[]>([]);
-  const [loaded, setLoaded] = useState(false);
+function Dashboard({
+  initialLeads,
+  onLogout,
+}: {
+  initialLeads: Lead[];
+  onLogout: () => void;
+}) {
+  const [leads, setLeads] = useState<Lead[]>(initialLeads);
 
-  useEffect(() => {
-    setLeads(getLeads());
-    setLoaded(true);
-  }, []);
-
-  function handleDelete(id: string) {
-    setLeads(deleteLead(id));
+  async function handleDelete(id: string) {
+    try {
+      setLeads(await deleteLead(id));
+    } catch {
+      window.alert("Falha ao remover o lead. Tente novamente.");
+    }
   }
 
-  function handleClear() {
+  async function handleClear() {
     if (!window.confirm("Apagar todos os leads? Essa ação não pode ser desfeita.")) return;
-    clearLeads();
-    setLeads([]);
+    try {
+      await clearLeads();
+      setLeads([]);
+    } catch {
+      window.alert("Falha ao limpar os leads. Tente novamente.");
+    }
   }
 
   const byTier = (tier: string) => leads.filter((l) => l.tier === tier).length;
@@ -147,8 +165,8 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
               Leads dos ingressos
             </h1>
             <p className="mt-3 max-w-lg text-sm text-muted">
-              Dados capturados pelo formulário antes do direcionamento ao WhatsApp. Ficam
-              salvos apenas neste navegador (sem backend).
+              Dados capturados pelo formulário antes do direcionamento ao WhatsApp,
+              salvos no servidor.
             </p>
           </div>
 
@@ -195,9 +213,8 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
         <div className="mt-8 overflow-hidden rounded-2xl border border-line bg-white/[0.02]">
           {leads.length === 0 ? (
             <p className="p-12 text-center text-sm text-muted">
-              {loaded
-                ? "Nenhum lead capturado ainda. Eles aparecem aqui assim que alguém preencher o formulário de ingresso."
-                : "Carregando…"}
+              Nenhum lead capturado ainda. Eles aparecem aqui assim que alguém preencher o
+              formulário de ingresso.
             </p>
           ) : (
             <div className="overflow-x-auto">
@@ -252,20 +269,36 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
 }
 
 export default function AdminPage() {
-  const [authed, setAuthed] = useState(false);
-  const [checked, setChecked] = useState(false);
+  const [screen, setScreen] = useState<"checking" | "login" | "dashboard">("checking");
+  const [leads, setLeads] = useState<Lead[]>([]);
 
   useEffect(() => {
-    setAuthed(window.localStorage.getItem(AUTH_KEY) === "1");
-    setChecked(true);
+    fetchLeads()
+      .then((data) => {
+        if (data === null) {
+          setScreen("login");
+        } else {
+          setLeads(data);
+          setScreen("dashboard");
+        }
+      })
+      .catch(() => setScreen("login"));
   }, []);
 
-  function handleLogout() {
-    window.localStorage.removeItem(AUTH_KEY);
-    setAuthed(false);
+  async function handleLogout() {
+    await logout();
+    setScreen("login");
   }
 
-  if (!checked) return <main className="min-h-screen bg-deep" />;
-  if (!authed) return <LoginScreen onLogin={() => setAuthed(true)} />;
-  return <Dashboard onLogout={handleLogout} />;
+  if (screen === "checking") return <main className="min-h-screen bg-deep" />;
+  if (screen === "login")
+    return (
+      <LoginScreen
+        onLogin={(data) => {
+          setLeads(data);
+          setScreen("dashboard");
+        }}
+      />
+    );
+  return <Dashboard initialLeads={leads} onLogout={handleLogout} />;
 }
