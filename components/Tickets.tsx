@@ -51,10 +51,11 @@ export default function Tickets() {
               )}
 
               <p className="eyebrow">{t.tier}</p>
-              <div className="mt-4 flex items-end gap-1">
-                <span className="mb-2 text-sm text-muted">R$</span>
-                <span className="font-serif text-5xl leading-none text-gold">{t.price}</span>
+              <div className="mt-4 flex items-end gap-1.5">
+                <span className="mb-1.5 text-sm text-muted">12x de R$</span>
+                <span className="font-serif text-5xl leading-none text-gold">{t.installment}</span>
               </div>
+              <p className="mt-2 text-sm text-camel">ou R$ {t.price} à vista</p>
               <p className="mt-3 text-sm text-muted">{t.lead}</p>
 
               <div className="gold-rule my-6 opacity-30" />

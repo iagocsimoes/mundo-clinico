@@ -139,7 +139,8 @@ export const STATS = [
 export const TICKETS = [
   {
     tier: "Platinum",
-    price: "997",
+    price: "997,00",
+    installment: "103,11",
     lead: "Para quem quer viver o conteúdo e estar dentro da Imersão.",
     items: ["Acesso a todas as palestras e painéis", "Kit oficial do evento", "Almoço incluso"],
     cta: "Garantir ingresso Platinum",
@@ -150,7 +151,8 @@ export const TICKETS = [
   },
   {
     tier: "Diamond",
-    price: "1.997",
+    price: "1.997,00",
+    installment: "206,54",
     lead: "Para quem quer viver o evento com uma experiência mais completa.",
     items: [
       "Acesso a todas as palestras e painéis",
@@ -166,7 +168,8 @@ export const TICKETS = [
   },
   {
     tier: "Experience",
-    price: "2.297",
+    price: "2.297,00",
+    installment: "237,56",
     lead: "Para quem quer viver a Imersão de forma mais próxima e exclusiva.",
     items: [
       "Acesso a todas as palestras e painéis",
